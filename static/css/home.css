@@ -1,0 +1,130 @@
+/* ========== MOBILE-FIRST STYLES ========== */
+/* Base Styles (All Devices) */
+.home-hero {
+  position: relative;
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  min-height: 180px;
+  max-width: 100vw;
+}
+
+.home-hero img {
+  width: 100%;
+  height: auto;
+  min-height: 180px;
+  max-height: 50vh;
+  object-fit: cover;
+  display: block;
+}
+
+.home-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.home-hero-content {
+  width: 92%;
+  color: white;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0.4rem;
+  margin: 0 auto;
+}
+
+/* Product Cards */
+.home-product-card {
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.home-product-img-wrap {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #f8f9fa;
+}
+
+.home-product-img-wrap img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.home-product-info {
+  padding: 1rem;
+}
+
+/* ========== RESPONSIVE BREAKPOINTS ========== */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .home-hero {
+    min-height: 220px;
+  }
+  .home-hero img {
+    min-height: 220px;
+  }
+  .home-product-img-wrap {
+    height: 180px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: 300px;
+  }
+  .home-hero img {
+    min-height: 300px;
+  }
+  .home-product-img-wrap {
+    height: 200px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .home-hero {
+    min-height: 400px;
+  }
+  .home-hero img {
+    min-height: 400px;
+  }
+}
+
+/* Special fixes for specific devices */
+/* iPhone 5/SE */
+@media (max-width: 320px) {
+  .home-hero {
+    min-height: 150px;
+  }
+  .home-hero img {
+    min-height: 150px;
+  }
+  .home-product-img-wrap {
+    height: 120px;
+  }
+}
+
+/* Samsung Galaxy Fold */
+@media (max-width: 280px) {
+  .home-hero {
+    min-height: 120px;
+  }
+  .home-hero img {
+    min-height: 120px;
+  }
+}

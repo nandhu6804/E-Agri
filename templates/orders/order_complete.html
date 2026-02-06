@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-conten padding-y bg">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <!-- Customer menu can go here -->
+            </aside>
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <strong class="d-inline-block mr-3">Order ID: {{ order_number }}</strong>
+                        <span>Order Date: {{ order.created_at }}</span>
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            <div class="col-md-8">
+                                <h6 class="text-muted">Delivery to</h6>
+                                <p>
+                                    {{ order.full_name }} <br>
+                                    {{ order.full_address }} <br>
+                                    {{ order.city }}, {{ order.state }}, {{ order.country }} <br>
+                                    <i class="fa fa-phone"></i> {{ order.phone }}
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Payment</h6>
+                                <span class="text-success">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp Payment
+                                </span>
+                                <p>
+                                    Subtotal: ₹{{ subtotal }} <br>
+                                    Tax: ₹{{ order.tax }} <br> 
+                                    <span class="b">Total: ₹{{ order.order_total }}</span>
+                                </p>
+                            </div>
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Product</th>
+                                    <th width="20%">Quantity</th>
+                                    <th width="20%">Unit Price</th>
+                                    <th width="20%" class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in ordered_products %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ item.product.image.url }}" width="60" height="60" class="img-xs border">
+                                        <p class="title mb-0">{{ item.product.product_name }}</p>
+                                        {% if item.variations.all %}
+                                        <small>
+                                            {% for variation in item.variations.all %}
+                                            {{ variation.variation_category }}: {{ variation.variation_value }} <br>
+                                            {% endfor %}
+                                        </small>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>₹{{ item.product_price }}</td>
+                                    <td class="text-right">₹{{ item.product_price|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div> <!-- table-responsive .end// -->
+                </article> <!-- order-group.// --> 
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Complete Your Order</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Order Summary</h4>
+                    <p>Order Number: {{ order.order_number }}</p>
+                    <p>Total Amount: ₹{{ grand_total }}</p>
+                    
+                    <div class="mt-4">
+                        <h5>Payment Instructions:</h5>
+                        <ol>
+                            <li>Click the WhatsApp button below to send your order details to our admin</li>
+                            <li>Our admin will contact you shortly for payment confirmation</li>
+                            <li>Once confirmed, your order will be processed</li>
+                        </ol>
+                        
+                        <div id="payment-section">
+                            <button id="whatsapp-btn" class="btn btn-success btn-lg">
+                                <i class="fab fa-whatsapp"></i> Send Order via WhatsApp
+                            </button>
+                            <p class="text-muted mt-2">
+                                <small>You'll be redirected to WhatsApp Web to send the order details</small>
+                            </p>
+                        </div>
+                        
+                        <div id="success-section" style="display:none;">
+                            <div class="alert alert-success">
+                                <h4><i class="fas fa-check-circle"></i> Order Placed Successfully!</h4>
+                                <p>Your order has been sent to our admin. We'll contact you shortly.</p>
+                                <p>Order Number: <strong id="success-order-number"></strong></p>
+                                <a href="{% url 'order_complete' %}?order_number=" id="order-details-link" class="btn btn-primary">
+                                    View Order Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const whatsappBtn = document.getElementById('whatsapp-btn');
+    const paymentSection = document.getElementById('payment-section');
+    const successSection = document.getElementById('success-section');
+    const successOrderNumber = document.getElementById('success-order-number');
+    const orderDetailsLink = document.getElementById('order-details-link');
+    
+    whatsappBtn.addEventListener('click', function() {
+        // Disable button to prevent multiple clicks
+        whatsappBtn.disabled = true;
+        whatsappBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        
+        // Send AJAX request to process order
+        fetch("{% url 'whatsapp_payment' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                orderID: '{{ order.order_number }}'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Show success message
+                paymentSection.style.display = 'none';
+                successSection.style.display = 'block';
+                successOrderNumber.textContent = data.order_number;
+                
+                // Update order details link
+                orderDetailsLink.href = `{% url 'order_complete' %}?order_number=${data.order_number}&payment_id=${data.payment_id}`;
+                
+                // Open WhatsApp in a new tab
+                window.open(data.whatsapp_url, '_blank');
+            } else {
+                alert('Error: ' + data.message);
+                whatsappBtn.disabled = false;
+                whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Send Order via WhatsApp';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+            whatsappBtn.disabled = false;
+            whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Send Order via WhatsApp';
+        });
+    });
+});
+</script>
+
+<style>
+    .btn-success {
+        background-color: #25D366;
+        border-color: #25D366;
+    }
+    .btn-success:hover {
+        background-color: #128C7E;
+        border-color: #128C7E;
+    }
+    .alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+</style>
+{% endblock %}
