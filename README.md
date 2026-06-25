@@ -4,7 +4,7 @@
 
 ## Overview
 
-E Agri is an agricultural ecommerce web application developed using the Django framework. The platform connects farmers and customers through an online marketplace, enabling easy buying and selling of agricultural products.
+E Agri is an agricultural ecommerce web application developed using the Django framework. The platform connects farmers and customers through an online marketplace, enabling easy buying and visiting of agricultural products.
 
 ## Roles and Functionalities
 
@@ -66,7 +66,3 @@ python manage.py runserver
 * Easy management of agricultural products
 * Secure and user-friendly platform
 * Supports digital agriculture and online marketing
-
-## License
-
-This project is developed for educational and learning purposes.
