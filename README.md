@@ -39,6 +39,7 @@ E Agri is an agricultural ecommerce web application developed using the Django f
 * Django
 * HTML
 * CSS
+* SQLite3
 
 ## Features
 
