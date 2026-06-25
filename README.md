@@ -1,6 +1,5 @@
 # Ecommerce
 # E Agri
-# E Agri
 
 ## Overview
 
