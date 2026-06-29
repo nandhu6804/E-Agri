@@ -34,7 +34,6 @@ E Agri is an agricultural ecommerce web application developed using the Django f
 
 ## Technology Stack
 
-* Python
 * Django
 * HTML
 * CSS
@@ -63,5 +62,4 @@ python manage.py runserver
 
 * Direct connection between farmers and customers
 * Easy management of agricultural products
-* Secure and user-friendly platform
 * Supports digital agriculture and online marketing
